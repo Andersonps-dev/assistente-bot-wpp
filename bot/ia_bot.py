@@ -11,7 +11,7 @@ os.environ['GROQ_API_KEY'] = config('GROQ_API_KEY')
 class AIBot:
 
     def __init__(self):
-        self.__chat = ChatGroq(model='llama-3.1-70b-versatile')
+        self.__chat = ChatGroq(model='llama3-70b-8192')
 
     def invoke(self, question):
         prompt = PromptTemplate(
