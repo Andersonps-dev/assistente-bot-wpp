@@ -52,3 +52,8 @@ Antes de iniciar, certifique-se de ter os seguintes requisitos instalados na sua
    No terminal, um QR Code será exibido. Use o WhatsApp Business para escanear e conectar ao serviço.
 
 ---
+6. **Iniciar banco de dados no container**
+   docker exec -it <container_name> /bin/bash
+
+   # Dentro do container
+   python /app/rag/rag.py
