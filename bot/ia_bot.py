@@ -17,7 +17,7 @@ class AIBot:
         prompt = PromptTemplate(
             input_variables=['texto'],
             template='''
-            Você é um tradutor de textos que traduz o texto do usuário para o Inglês, somente a tradução.
+            Vamos conversar, seja obejetivo, como se estivesse convessando como um humano.
             <texto>
             {texto}
             </texto>
