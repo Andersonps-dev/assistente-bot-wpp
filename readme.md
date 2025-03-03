@@ -5,6 +5,7 @@ Antes de iniciar, certifique-se de ter os seguintes requisitos instalados na sua
 
 - **Docker**: Para instalar, siga as instruções oficiais: [Docker Install](https://docs.docker.com/get-docker/)
 - **Docker Compose**: Para instalar, siga as instruções oficiais: [Docker Compose Install](https://docs.docker.com/compose/install/)
+- **Python**: Para instalar, siga as instruções oficiais: [Python Install](https://www.python.org/downloads/)
 
 ## Passo a passo para configuração
 
@@ -46,4 +47,3 @@ Antes de iniciar, certifique-se de ter os seguintes requisitos instalados na sua
    No terminal, um QR Code será exibido. Use o WhatsApp Business para escanear e conectar ao serviço.
 
 ---
-
