@@ -7,6 +7,7 @@ Antes de iniciar, certifique-se de ter os seguintes requisitos instalados na sua
 - **Docker Compose**: Para instalar, siga as instruções oficiais: [Docker Compose Install](https://docs.docker.com/compose/install/)
 - **Python**: Para instalar, siga as instruções oficiais: [Python Install](https://www.python.org/downloads/)
 - **WhastApp Business**
+- **Groq**: Para criar API do LLaMA: [Create API Groq](https://console.groq.com/playground)
 
 ## Passo a passo para configuração
 
