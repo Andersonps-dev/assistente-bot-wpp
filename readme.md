@@ -53,7 +53,7 @@ Antes de iniciar, certifique-se de ter os seguintes requisitos instalados na sua
 
 ---
 6. **Iniciar banco de dados no container**
-   docker exec -it <container_name> /bin/bash
+   docker exec -it wpp_bot_api /bin/bash
 
    # Dentro do container
    python /app/rag/rag.py
