@@ -6,6 +6,7 @@ Antes de iniciar, certifique-se de ter os seguintes requisitos instalados na sua
 - **Docker**: Para instalar, siga as instruções oficiais: [Docker Install](https://docs.docker.com/get-docker/)
 - **Docker Compose**: Para instalar, siga as instruções oficiais: [Docker Compose Install](https://docs.docker.com/compose/install/)
 - **Python**: Para instalar, siga as instruções oficiais: [Python Install](https://www.python.org/downloads/)
+- **WhastApp Business**
 
 ## Passo a passo para configuração
 
@@ -41,6 +42,9 @@ Antes de iniciar, certifique-se de ter os seguintes requisitos instalados na sua
    ```
    http://localhost:3000/dashboard/
    ```
+   Vai até a parte Sessions
+   Linha do default -> Configuração -> Url: http://api:5000/chatbot/webhook/ -> Events: somente menssage -> update
+
 
 5. **Conectar o WhatsApp Business**
    
