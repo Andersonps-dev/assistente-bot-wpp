@@ -6,9 +6,20 @@ app = Flask(__name__)
 
 @app.route('/chatbot/webhook/', methods=['POST'])
 def webhook():
+    # Check if the request contains JSON data
+    if not request.is_json:
+        return jsonify({'status': 'error', 'message': 'Request must contain JSON'}), 400
+    
     data = request.json
-    chat_id = data['payload']['from']
-    received_message = data['payload']['body']
+    
+    try:
+        chat_id = data['payload']['from']
+        received_message = data['payload']['body']
+    except KeyError as e:
+        return jsonify({'status': 'error', 'message': f'Missing key in payload: {str(e)}'}), 400
+    except TypeError:
+        return jsonify({'status': 'error', 'message': 'Invalid payload structure'}), 400
+
     is_group = '@g.us' in chat_id
 
     if is_group:
@@ -33,7 +44,6 @@ def webhook():
     waha.stop_typing(chat_id=chat_id)
 
     return jsonify({'status': 'success'}), 200
-
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
