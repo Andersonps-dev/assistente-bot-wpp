@@ -17,6 +17,7 @@ Antes de iniciar, certifique-se de ter os seguintes requisitos instalados na sua
    
    ```env
    GROQ_API_KEY= 'Sua chave api'
+   HUGGINGFACE_API_KEY= 'Sua chave api'
    ```
 
 2. **Ativar o WAHA**
