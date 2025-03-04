@@ -54,6 +54,7 @@ Antes de iniciar, certifique-se de ter os seguintes requisitos instalados na sua
 
 ---
 6. **Iniciar banco de dados no container(Somente se alterar os dados)**
+   
    docker exec -it wpp_bot_api /bin/bash
 
    # Dentro do container
