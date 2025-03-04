@@ -8,6 +8,7 @@ Antes de iniciar, certifique-se de ter os seguintes requisitos instalados na sua
 - **Python**: Para instalar, siga as instruções oficiais: [Python Install](https://www.python.org/downloads/)
 - **WhastApp Business**
 - **Groq**: Para criar API do LLaMA: [Create API Groq](https://console.groq.com/playground)
+- **Hugging Face**: Para Processar os dados: [Create API Hugging Face](https://huggingface.co/)
 
 ## Passo a passo para configuração
 
