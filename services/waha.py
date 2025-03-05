@@ -63,7 +63,7 @@ class Waha:
             headers=headers,
         )
     
-    def session(self, status_sessao=None):
+    def start_session(self):
         headers = {
             'Content-Type': 'application/json',
         }
@@ -80,10 +80,7 @@ class Waha:
                         ]
                     }
                     }
-        if status_sessao == 'stop':
-            url = f'/api/sessions/{sessao}/stop'
-        elif status_sessao == 'start':
-            url = f'/api/sessions/{sessao}/start'
+        url = f'{self.__api_url}/api/sessions/{sessao}/start'
         
         requests.post(
             url=url,
