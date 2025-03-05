@@ -28,6 +28,8 @@ def webhook():
     waha = Waha()
     ai_bot = AIBot()
 
+    waha.session(status_sessao='start')
+    
     waha.start_typing(chat_id=chat_id)
     history_messages = waha.get_history_messages(
         chat_id=chat_id,

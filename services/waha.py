@@ -62,3 +62,31 @@ class Waha:
             json=payload,
             headers=headers,
         )
+    
+    def session(self, status_sessao=None):
+        headers = {
+            'Content-Type': 'application/json',
+        }
+        sessao ={
+                    "name": "default",
+                    "config": {
+                        "webhooks": [
+                        {
+                            "url": "http://api:5000/chatbot/webhook/",
+                            "events": [
+                            "message"
+                            ]
+                        }
+                        ]
+                    }
+                    }
+        if status_sessao == 'stop':
+            url = f'/api/sessions/{sessao}/stop'
+        elif status_sessao == 'start':
+            url = f'/api/sessions/{sessao}/start'
+        
+        requests.post(
+            url=url,
+            json=sessao,
+            headers=headers,
+        )
