@@ -67,23 +67,26 @@ class Waha:
         headers = {
             'Content-Type': 'application/json',
         }
-        sessao ={
-                    "name": "default",
-                    "config": {
-                        "webhooks": [
-                        {
-                            "url": "http://api:5000/chatbot/webhook/",
-                            "events": [
-                            "message"
-                            ]
-                        }
-                        ]
+        sessao = {
+            "name": "default",
+            "config": {
+                "webhooks": [
+                    {
+                        "url": "http://api:5000/chatbot/webhook/",
+                        "events": ["message"]
                     }
-                    }
-        url = f'{self.__api_url}/api/sessions/{sessao}/start'
+                ]
+            }
+        }
         
-        requests.post(
+        # Corrigindo a URL, incluindo apenas o nome da sessão
+        url = f'{self.__api_url}/api/sessions/default/start'
+
+        response = requests.post(
             url=url,
             json=sessao,
             headers=headers,
         )
+
+        print(response.status_code, response.text)  # Para depuração
+        return response.json()
