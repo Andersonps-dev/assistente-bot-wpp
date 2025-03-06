@@ -4,6 +4,9 @@ from services.waha import Waha
 
 app = Flask(__name__)
 
+waha = Waha()
+waha.start_session()
+
 @app.route('/chatbot/webhook/', methods=['POST'])
 def webhook():
     # Check if the request contains JSON data
@@ -25,7 +28,6 @@ def webhook():
     if is_group:
         return jsonify({'status': 'success', 'message': 'Mensagem de grupo ignorada.'}), 200
 
-    waha = Waha()
     ai_bot = AIBot()
     
     waha.start_typing(chat_id=chat_id)
