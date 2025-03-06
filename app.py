@@ -4,12 +4,15 @@ from services.waha import Waha
 
 app = Flask(__name__)
 
+# Instancia o Waha
 waha = Waha()
+
+# Inicia e configura a sessão antes de rodar o Flask
+print("Iniciando e configurando a sessão do Waha...")
 waha.start_session()
 
 @app.route('/chatbot/webhook/', methods=['POST'])
 def webhook():
-    # Check if the request contains JSON data
     if not request.is_json:
         return jsonify({'status': 'error', 'message': 'Request must contain JSON'}), 400
     

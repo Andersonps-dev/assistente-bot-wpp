@@ -1,10 +1,8 @@
 services:
-
   waha:
     image: devlikeapro/waha:latest
     container_name: wpp_bot_waha
     restart: always
-
     ports:
       - '3000:3000'
 
@@ -18,8 +16,5 @@ services:
     volumes:
       - .:/app
       - ./chroma_data:/app/chroma_data
-    command: >
-      sh -c "flask run --host=0.0.0.0 --port=5000 --debug &
-             sleep 5 &&
-             curl -X PUT http://waha:3000/api/sessions/default -H 'Content-Type: application/json' -d '{ \"config\": { \"webhooks\": [ { \"url\": \"http://api:5000/chatbot/webhook/\", \"events\": [\"message\"] } ] } }' &&
-             wait"
+    depends_on:
+      - waha
