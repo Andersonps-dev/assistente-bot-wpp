@@ -87,6 +87,5 @@ class Waha:
             json=sessao,
             headers=headers,
         )
-
-        print(response.status_code, response.text)  # Para depuração
+        
         return response.json()
