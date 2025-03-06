@@ -1,19 +1,12 @@
 services:
+
   waha:
     image: devlikeapro/waha:latest
     container_name: wpp_bot_waha
     restart: always
+
     ports:
       - '3000:3000'
-    environment:
-      - WAHA_SESSION_NAME=default
-      - WAHA_SESSION_STORAGE=/waha-data
-    volumes:
-      - waha_data:/waha-data
-      - ./start-waha.sh:/start-waha.sh
-    entrypoint: ["/bin/sh", "-c", "/start-waha.sh"]
-    depends_on:
-      - api
 
   api:
     build:
@@ -25,7 +18,3 @@ services:
     volumes:
       - .:/app
       - ./chroma_data:/app/chroma_data
-
-volumes:
-  waha_data:
-    driver: local
