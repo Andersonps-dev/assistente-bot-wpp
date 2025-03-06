@@ -15,10 +15,6 @@ services:
     depends_on:
       - api
 
-volumes:
-  waha_data:
-    driver: local
-
   api:
     build:
       context: .
@@ -29,3 +25,7 @@ volumes:
     volumes:
       - .:/app
       - ./chroma_data:/app/chroma_data
+
+volumes:
+  waha_data:
+    driver: local
