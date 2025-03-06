@@ -13,7 +13,7 @@ services:
     volumes:
       - waha_data:/waha-data  # Garante persistência da sessão
       - ./waha-init.sh:/waha-init.sh  # Adiciona script de inicialização
-    entrypoint: ["/bin/sh", "/waha-init.sh"]  # Define o script como comando de entrada
+    entrypoint: ["sh", "/waha-init.sh"]  # Define o script como comando de entrada
 
   api:
     build:
