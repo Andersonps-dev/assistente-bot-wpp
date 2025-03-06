@@ -60,3 +60,18 @@ Antes de iniciar, certifique-se de ter os seguintes requisitos instalados na sua
 
    # Dentro do container
    python /app/rag/rag.py
+
+   verificar sessao:
+   curl -X GET http://waha:3000/api/sessions/default
+   curl -X GET http://waha:3000/api/webhooks
+   curl -X PUT http://waha:3000/api/sessions/default -H "Content-Type: application/json" -d '{
+      "config": {
+         "webhooks": [
+               {
+                  "url": "http://api:5000/chatbot/webhook/",
+                  "events": ["message"]
+               }
+         ]
+      }
+   }'
+   curl -X POST http://waha:3000/api/sessions/default/start
