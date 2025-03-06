@@ -1,6 +1,4 @@
 #!/bin/sh
-
-# Instala o dumb-init se não estiver presente
 if ! command -v dumb-init &> /dev/null
 then
     echo "dumb-init não encontrado, instalando..."

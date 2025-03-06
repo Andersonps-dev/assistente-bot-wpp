@@ -62,30 +62,3 @@ class Waha:
             json=payload,
             headers=headers,
         )
-    
-    def start_session(self):
-        headers = {
-            'Content-Type': 'application/json',
-        }
-        sessao = {
-            "name": "default",
-            "config": {
-                "webhooks": [
-                    {
-                        "url": "http://api:5000/chatbot/webhook/",
-                        "events": ["message"]
-                    }
-                ]
-            }
-        }
-        
-        # Corrigindo a URL, incluindo apenas o nome da sessão
-        url = f'{self.__api_url}/api/sessions/default/start'
-
-        response = requests.post(
-            url=url,
-            json=sessao,
-            headers=headers,
-        )
-        
-        return response.json()
