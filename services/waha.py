@@ -20,7 +20,7 @@ class Waha:
             return None
 
     def start_session(self):
-        """ Cria ou inicia a sessão apenas se necessário """
+        """ Cria ou reinicia a sessão (para se necessário e cria uma nova) """
         session_name = "default"
         session_data = self.check_session(session_name)
 
@@ -28,18 +28,33 @@ class Waha:
             session_status = session_data.get("status", "")
             print(f"📌 Sessão '{session_name}' encontrada. Status: {session_status}")
 
-            if session_status == "STOPPED":
-                print(f"🔄 Iniciando sessão '{session_name}'...")
+            if session_status == "CONNECTED":
+                print(f"⚠️ Sessão '{session_name}' já está ativa. Parando e criando nova sessão...")
+                self.stop_session(session_name)  # Para a sessão existente
+                return self.create_session()  # Cria uma nova sessão
+            elif session_status == "STOPPED":
+                print(f"🔄 Sessão '{session_name}' está parada. Iniciando...")
                 return self.start_existing_session(session_name)
-            elif session_status == "CONNECTED":
-                print(f"✅ Sessão '{session_name}' já está ativa e conectada.")
-                return session_data
             else:
                 print(f"⚠️ Sessão '{session_name}' está em estado desconhecido: {session_status}")
                 return session_data
         else:
             print(f"🆕 Criando nova sessão '{session_name}'...")
             return self.create_session()
+
+    def stop_session(self, session_name="default"):
+        """Para uma sessão existente"""
+        url = f'{self.__api_url}/api/sessions/{session_name}/stop'
+        headers = {'Content-Type': 'application/json'}
+
+        try:
+            response = requests.post(url, headers=headers)
+            if response.status_code == 200:
+                print(f"✅ Sessão '{session_name}' parada com sucesso!")
+            else:
+                print(f"❌ Erro ao parar sessão: {response.status_code} - {response.text}")
+        except requests.exceptions.RequestException as e:
+            print(f"Erro ao parar a sessão: {str(e)}")
 
     def create_session(self):
         """ Cria uma nova sessão """
