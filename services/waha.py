@@ -6,21 +6,19 @@ class Waha:
         self.session_name = "default"
 
     def check_session(self, session_name="default"):
-        """ Verifica se a sessão existe e retorna o status """
         url = f'{self.__api_url}/api/sessions/{session_name}'
         headers = {'Content-Type': 'application/json'}
 
         try:
             response = requests.get(url, headers=headers)
             if response.status_code == 200:
-                return response.json()  # Retorna o status da sessão
-            return None  # Sessão não existe
+                return response.json()
+            return None
         except requests.exceptions.RequestException as e:
             print(f"Erro na requisição: {str(e)}")
             return None
 
     def start_session(self):
-        """ Cria ou reinicia a sessão e aplica a configuração """
         session_name = "default"
         session_data = self.check_session(session_name)
 
@@ -30,8 +28,8 @@ class Waha:
 
             if session_status == "CONNECTED":
                 print(f"⚠️ Sessão '{session_name}' já está ativa. Parando e criando nova sessão...")
-                self.stop_session(session_name)  # Para a sessão existente
-                self.create_session()  # Cria uma nova sessão
+                self.stop_session(session_name)
+                self.create_session()
             elif session_status == "STOPPED":
                 print(f"🔄 Sessão '{session_name}' está parada. Iniciando...")
                 self.start_existing_session(session_name)
@@ -41,7 +39,6 @@ class Waha:
             print(f"🆕 Criando nova sessão '{session_name}'...")
             self.create_session()
 
-        # Após iniciar ou criar a sessão, aplica a configuração
         self.configure_session()
 
     def stop_session(self, session_name="default"):
