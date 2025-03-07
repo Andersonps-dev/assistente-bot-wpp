@@ -1,5 +1,3 @@
-import os
-import subprocess
 from flask import Flask, request, jsonify
 from bot.ia_bot import AIBot
 from services.waha import Waha
@@ -12,9 +10,6 @@ waha = Waha()
 # Inicia e configura a sessão antes de rodar o Flask
 print("Iniciando e configurando a sessão do Waha...")
 waha.start_session()
-
-# Inicia o rag.py em background
-subprocess.Popen(["python", "/app/rag/rag.py"])
 
 @app.route('/chatbot/webhook/', methods=['POST'])
 def webhook():
