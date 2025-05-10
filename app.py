@@ -4,10 +4,8 @@ from services.waha import Waha
 
 app = Flask(__name__)
 
-# Instancia o Waha
 waha = Waha()
 
-# Inicia e configura a sessão antes de rodar o Flask
 print("Iniciando e configurando a sessão do Waha...")
 waha.start_session()
 
