@@ -54,6 +54,14 @@ class AIBot:
         </context>
         '''
 
+        max_history_messages = 3
+        truncated_history = history_messages[-max_history_messages:]
+
+        max_message_length = 500
+        for message in truncated_history:
+            if len(message.get('body', '')) > max_message_length:
+                message['body'] = message['body'][:max_message_length] + '...'
+
         docs = self.__retriever.invoke(question)
         question_answering_prompt = ChatPromptTemplate.from_messages(
             [
@@ -67,8 +75,8 @@ class AIBot:
         document_chain = create_stuff_documents_chain(self.__chat, question_answering_prompt)
         response = document_chain.invoke(
             {
-                'context': docs,
-                'messages': self.__build_messages(history_messages, question),
+                'context': docs[:5],
+                'messages': self.__build_messages(truncated_history, question),
             }
         )
         return response
