@@ -33,9 +33,11 @@ class AIBot:
 
     def __build_messages(self, history_messages, question):
         messages = []
-        for message in history_messages:
-            message_class = HumanMessage if message.get('fromMe') else AIMessage
-            messages.append(message_class(content=message.get('body')))
+        for message in history_messages.get('messages', []):
+            # Evolution API message structure: check if it's a text message
+            if 'message' in message and 'conversation' in message['message']:
+                message_class = AIMessage if message['key']['fromMe'] else HumanMessage
+                messages.append(message_class(content=message['message']['conversation']))
         messages.append(HumanMessage(content=question))
         return messages
 
@@ -55,12 +57,13 @@ class AIBot:
         '''
 
         max_history_messages = 3
-        truncated_history = history_messages[-max_history_messages:]
+        truncated_history = history_messages.get('messages', [])[-max_history_messages:]
 
         max_message_length = 500
         for message in truncated_history:
-            if len(message.get('body', '')) > max_message_length:
-                message['body'] = message['body'][:max_message_length] + '...'
+            if 'message' in message and 'conversation' in message['message']:
+                if len(message['message']['conversation']) > max_message_length:
+                    message['message']['conversation'] = message['message']['conversation'][:max_message_length] + '...'
 
         docs = self.__retriever.invoke(question)
         question_answering_prompt = ChatPromptTemplate.from_messages(
@@ -76,7 +79,7 @@ class AIBot:
         response = document_chain.invoke(
             {
                 'context': docs[:5],
-                'messages': self.__build_messages(truncated_history, question),
+                'messages': self.__build_messages(history_messages, question),
             }
         )
         return response

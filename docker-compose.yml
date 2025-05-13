@@ -1,11 +1,4 @@
 services:
-  waha:
-    image: devlikeapro/waha:latest
-    container_name: wpp_bot_waha
-    restart: always
-    ports:
-      - '3000:3000'
-
   api:
     build:
       context: .
@@ -18,3 +11,18 @@ services:
       - ./chroma_data:/app/chroma_data
     depends_on:
       - waha
+      
+  db:
+    image: postgres:latest
+    container_name:   
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: wpp_bot
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+volumes:
+  db_data:

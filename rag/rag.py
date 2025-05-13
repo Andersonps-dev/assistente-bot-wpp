@@ -1,19 +1,22 @@
-import os
-
+import psycopg2
 from decouple import config
-
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_chroma import Chroma
-from langchain_community.document_loaders import PyPDFLoader
 from langchain_huggingface import HuggingFaceEmbeddings
 
-os.environ['HUGGINGFACE_API_KEY'] = config('HUGGINGFACE_API_KEY')
+DATABASE_URL = config('DATABASE_URL')
 
+def load_documents_from_db():
+    connection = psycopg2.connect(DATABASE_URL)
+    cursor = connection.cursor()
+    cursor.execute("SELECT content FROM business_data")
+    rows = cursor.fetchall()
+    documents = [row[0] for row in rows]
+    connection.close()
+    return documents
 
 if __name__ == '__main__':
-    file_path = '/app/rag/data/dados.pdf'
-    loader = PyPDFLoader(file_path)
-    docs = loader.load()
+    docs = load_documents_from_db()
 
     text_splitter = RecursiveCharacterTextSplitter(
         chunk_size=1000,

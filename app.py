@@ -1,13 +1,13 @@
 from flask import Flask, request, jsonify
 from bot.ia_bot import AIBot
-from services.waha import Waha
+from services.evolutionAPI import EvolutionAPI
 
 app = Flask(__name__)
 
-waha = Waha()
+evolution_api = EvolutionAPI()
 
-print("Iniciando e configurando a sessão do Waha...")
-waha.start_session()
+print("Iniciando e configurando a sessão do Evolution API...")
+evolution_api.start_session()
 
 @app.route('/chatbot/webhook/', methods=['POST'])
 def webhook():
@@ -17,12 +17,14 @@ def webhook():
     data = request.json
     
     try:
-        chat_id = data['payload']['from']
-        received_message = data['payload']['body']
-    except KeyError as e:
-        return jsonify({'status': 'error', 'message': f'Missing key in payload: {str(e)}'}), 400
-    except TypeError:
-        return jsonify({'status': 'error', 'message': 'Invalid payload structure'}), 400
+        # Evolution API webhook structure: messages are in data.messages
+        message_data = data['data']['messages'][0]
+        chat_id = message_data['key']['remoteJid']
+        received_message = message_data['message'].get('conversation', '')
+        if not received_message:
+            return jsonify({'status': 'success', 'message': 'Non-text message ignored.'}), 200
+    except (KeyError, TypeError) as e:
+        return jsonify({'status': 'error', 'message': f'Invalid payload structure: {str(e)}'}), 400
 
     is_group = '@g.us' in chat_id
 
@@ -31,8 +33,8 @@ def webhook():
 
     ai_bot = AIBot()
     
-    waha.start_typing(chat_id=chat_id)
-    history_messages = waha.get_history_messages(
+    evolution_api.start_typing(chat_id=chat_id)
+    history_messages = evolution_api.get_history_messages(
         chat_id=chat_id,
         limit=5,
     )
@@ -40,11 +42,11 @@ def webhook():
         history_messages=history_messages,
         question=received_message,
     )
-    waha.send_message(
+    evolution_api.send_message(
         chat_id=chat_id,
         message=response_message,
     )
-    waha.stop_typing(chat_id=chat_id)
+    evolution_api.stop_typing(chat_id=chat_id)
 
     return jsonify({'status': 'success'}), 200
 
