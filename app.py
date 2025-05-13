@@ -17,7 +17,6 @@ def webhook():
     data = request.json
     
     try:
-        # Evolution API webhook structure: messages are in data.messages
         message_data = data['data']['messages'][0]
         chat_id = message_data['key']['remoteJid']
         received_message = message_data['message'].get('conversation', '')

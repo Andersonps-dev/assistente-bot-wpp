@@ -4,8 +4,8 @@ class EvolutionAPI:
     def __init__(self):
         self.__api_url = 'http://evolution-api:3000/api/v1'
         self.session_name = "default"
-        self.api_key = 'your-api-key-here'  # Replace with your actual Evolution API key
-
+        self.api_key = 'your-api-key-here'
+        
     def check_session(self, session_name="default"):
         url = f'{self.__api_url}/instance/fetchInstances?instanceName={session_name}'
         headers = {
