@@ -34,7 +34,6 @@ class AIBot:
     def __build_messages(self, history_messages, question):
         messages = []
         for message in history_messages.get('messages', []):
-            # Evolution API message structure: check if it's a text message
             if 'message' in message and 'conversation' in message['message']:
                 message_class = AIMessage if message['key']['fromMe'] else HumanMessage
                 messages.append(message_class(content=message['message']['conversation']))
